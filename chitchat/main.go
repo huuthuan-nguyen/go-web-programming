@@ -72,3 +72,15 @@ func main() {
 	}
 	server.ListenAndServe()
 }
+
+type Server struct {
+	Addr string
+	Handler Handler
+	ReadTimeout time.Duration
+	WriteTimeout time.Duration
+	MaxHeaderBytes int
+	TLSConfig *tls.Config
+	TLSNextProto map[string]func(*Server, *tls.Conn, Hanlder)
+	ConnState func(net.Conn, ConnState)
+	ErrorLog *log.Logger
+}
