@@ -11,7 +11,7 @@ type Thread struct {
 }
 
 func (thread *Thread) NumReplies() (count int) {
-	row, err := Db.Query("SELECT count(*) FROM posts WHERE thread_id = $1", thread.id)
+	rows, err := Db.Query("SELECT count(*) FROM posts WHERE thread_id = $1", thread.Id)
 	if err != nil {
 		return
 	}

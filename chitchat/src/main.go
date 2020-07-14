@@ -1,28 +1,12 @@
 package main
 
 import (
+	"data"
 	"net/http"
+	"time"
+	"fmt"
 )
 
-/* index func */
-// func index(w http.ResponseWriter, r *http.Request) {
-// 	threads, err := data.Threads(); if err == nil {
-// 		_, err := session(w, r)
-// 		public_tmpl_files := []string{"templates/layout.html",
-// 										"templates/public.navbar.html",
-// 										"templates/index.html"}
-// 		private_tmpl_files := []string{"templates/layout.html",
-// 										"templates/private.navbar.html",
-// 										"templates/index.html"}
-// 		var templates *template.Template
-// 		if err != nil {
-// 			templates = template.Must(template.ParseFiles(private_tmpl_files...))
-// 		} else {
-// 			templates = template.Must(template.ParseFiles(public_tmpl_files...))
-// 		}
-// 		templates.ExecuteTemplate(w, "layout", threads)
-// 	}
-// }
 func index(writer http.ResponseWriter, request *http.Request) {
 	threads, err := data.Threads(); if err == nil {
 		_, err := session(writer, request)
@@ -34,7 +18,7 @@ func index(writer http.ResponseWriter, request *http.Request) {
 	}
 }
 
-func generateHTML(w http.ResponseWrite, data interface{}, fn ...string) {
+func generateHTML(w http.ResponseWriter, data interface{}, fn ...string) {
 	var files []string
 	for _, file := range fn {
 		files = append(files, fmt.Sprintf("templates/%s.html", file))
@@ -44,8 +28,6 @@ func generateHTML(w http.ResponseWrite, data interface{}, fn ...string) {
 	templates.ExecuteTemplate(write, "layout", data)
 }
 
-
-/* main func */
 func main() {
 	mux := http.NewServeMux() // this is like a controller in PHP
 	files := http.FileServer(http.Dir("/public")) // create handler function, like an action of controller.

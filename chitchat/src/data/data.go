@@ -1,6 +1,11 @@
 package data
 
-Var Db *sql.DB
+import (
+	"database/sql"
+	"log"
+)
+
+var Db *sql.DB
 
 func init() {
 	var err error
