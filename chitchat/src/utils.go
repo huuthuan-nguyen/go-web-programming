@@ -2,6 +2,8 @@ package main
 
 import (
 	"net/http"
+	"data"
+	"errors"
 )
 
 func session(w http.ResponseWriter, r *http.Request) (sess data.Session, err error) {

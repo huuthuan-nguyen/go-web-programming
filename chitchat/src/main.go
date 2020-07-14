@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 	"fmt"
+	"html/template"
 )
 
 func index(writer http.ResponseWriter, request *http.Request) {
@@ -18,14 +19,14 @@ func index(writer http.ResponseWriter, request *http.Request) {
 	}
 }
 
-func generateHTML(w http.ResponseWriter, data interface{}, fn ...string) {
+func generateHTML(writer http.ResponseWriter, data interface{}, fn ...string) {
 	var files []string
 	for _, file := range fn {
 		files = append(files, fmt.Sprintf("templates/%s.html", file))
 	}
 
 	templates := template.Must(template.ParseFiles(files...))
-	templates.ExecuteTemplate(write, "layout", data)
+	templates.ExecuteTemplate(writer, "layout", data)
 }
 
 func main() {
@@ -35,34 +36,34 @@ func main() {
 	mux.Handle("/static/", http.StripPrefix("/static/", files)) // put the handler function to handle, like register an action to a route.
 
 	mux.HandleFunc("/", index) // default endpoint. callback as parameter.
-	mux.HandleFunc("/err", err)
-	mux.handleFunc("/login", login)
-	mux.HandleFunc("/logout", logout)
-	mux.HandleFunc("/signup", signup)
-	mux.HandleFunc("/signup_account", signupAccount)
-	mux.HandleFunc("/authenticate", authenticate)
+	// mux.HandleFunc("/err", err)
+	// mux.handleFunc("/login", login)
+	// mux.HandleFunc("/logout", logout)
+	// mux.HandleFunc("/signup", signup)
+	// mux.HandleFunc("/signup_account", signupAccount)
+	// mux.HandleFunc("/authenticate", authenticate)
 
-	mux.HandleFunc("/thread/new", newThread)
-	mux.HandleFunc("/thread/create", createThread)
-	mux.HandleFunc("/thread/post", postThread)
-	mux.HandleFunc("/thread/read", readThread)
+	// mux.HandleFunc("/thread/new", newThread)
+	// mux.HandleFunc("/thread/create", createThread)
+	// mux.HandleFunc("/thread/post", postThread)
+	// mux.HandleFunc("/thread/read", readThread)
 
 
 	server := &http.Server{
 		Addr: "0.0.0.0:8080",
-		Handle: mux,
+		Handler: mux,
 	}
 	server.ListenAndServe()
 }
 
 type Server struct {
 	Addr string
-	Handler Handler
+	// Handler mux
 	ReadTimeout time.Duration
 	WriteTimeout time.Duration
 	MaxHeaderBytes int
-	TLSConfig *tls.Config
-	TLSNextProto map[string]func(*Server, *tls.Conn, Hanlder)
-	ConnState func(net.Conn, ConnState)
-	ErrorLog *log.Logger
+	// TLSConfig *tls.Config
+	// TLSNextProto map[string]func(*Server, *tls.Conn, Hanlder)
+	// ConnState func(net.Conn, ConnState)
+	//ErrorLog *log.Logger
 }
