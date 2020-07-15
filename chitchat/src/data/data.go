@@ -6,6 +6,7 @@ import (
 	"database/sql"
 	"log"
 	"fmt"
+	_ "github.com/lib/pq"
 )
 
 var Db *sql.DB

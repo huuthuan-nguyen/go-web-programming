@@ -4,8 +4,12 @@ import (
 	"net/http"
 	"data"
 	"errors"
+	"log"
 )
 
+var logger *log.Logger
+
+// check if the user is logged in and has a session, if not err is not nil
 func session(w http.ResponseWriter, r *http.Request) (sess data.Session, err error) {
 	cookie, err := r.Cookie("_cookie")
 	if err == nil {
@@ -15,4 +19,9 @@ func session(w http.ResponseWriter, r *http.Request) (sess data.Session, err err
 		}
 	}
 	return 
+}
+
+func danger(args ...interface{}) {
+	logger.SetPrefix("ERROR ")
+	logger.Println(args...)
 }
