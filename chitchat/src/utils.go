@@ -5,6 +5,7 @@ import (
 	"data"
 	"errors"
 	"log"
+	"strings"
 )
 
 var logger *log.Logger
@@ -24,4 +25,10 @@ func session(w http.ResponseWriter, r *http.Request) (sess data.Session, err err
 func danger(args ...interface{}) {
 	logger.SetPrefix("ERROR ")
 	logger.Println(args...)
+}
+
+// convenince function to redirect to the error message page
+func error_message(writer http.ResponseWriter, request *http.Request, msg string) {
+	url := []string{"/err?msg=", msg}
+	http.Redirect(writer, request, strings.Join(url, ""), 302)
 }

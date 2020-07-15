@@ -9,13 +9,29 @@ import (
 )
 
 func index(writer http.ResponseWriter, request *http.Request) {
-	threads, err := data.Threads(); if err == nil {
+	threads, err := data.Threads()
+	if err == nil {
 		_, err := session(writer, request)
 		if err != nil {
 			generateHTML(writer, threads, "layout", "public.navbar", "index")
 		} else {
 			generateHTML(writer, threads, "layout", "private.navbar", "index")
 		}
+	} else {
+		error_message(writer, request, "Cannot get threads")
+	}
+}
+
+// GET /err?msg=
+// shows the error message page
+func err(writer http.ResponseWriter, request *http.Request) {
+	vals := request.URL.Query()
+	_, err := session(writer, request)
+
+	if err != nil {
+		generateHTML(writer, vals.Get("msg"), "layout", "public.navbar", "error")
+	} else {
+		generateHTML(writer, vals.Get("msg"), "layout", "private.navbar", "error")
 	}
 }
 
@@ -36,7 +52,7 @@ func main() {
 	mux.Handle("/static/", http.StripPrefix("/static/", files)) // put the handler function to handle, like register an action to a route.
 
 	mux.HandleFunc("/", index) // default endpoint. callback as parameter.
-	// mux.HandleFunc("/err", err)
+	mux.HandleFunc("/err", err)
 	// mux.handleFunc("/login", login)
 	// mux.HandleFunc("/logout", logout)
 	// mux.HandleFunc("/signup", signup)
