@@ -4,9 +4,9 @@ import (
 	"crypto/rand"
 	"crypto/sha1"
 	"database/sql"
-	"log"
 	"fmt"
 	_ "github.com/lib/pq"
+	"log"
 )
 
 var Db *sql.DB

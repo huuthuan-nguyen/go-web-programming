@@ -2,10 +2,10 @@ package main
 
 import (
 	"data"
-	"net/http"
-	"time"
 	"fmt"
 	"html/template"
+	"net/http"
+	"time"
 )
 
 func index(writer http.ResponseWriter, request *http.Request) {
