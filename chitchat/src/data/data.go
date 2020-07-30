@@ -20,7 +20,7 @@ func init() {
 	return
 }
 
-// craete a random UUID with from RFC 4122
+// create a random UUID with from RFC 4122
 // adapted form http://github.com/nu7jatch/gouuid
 func createUUID() (uuid string) {
 	u := new([16]byte)

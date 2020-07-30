@@ -20,7 +20,7 @@ func (thread *Thread) NumReplies() (count int) {
 			return
 		}
 	}
-	rows.Close()
+	_ = rows.Close()
 	return
 }
 
@@ -36,6 +36,6 @@ func Threads() (threads []Thread, err error) {
 		}
 		threads = append(threads, th)
 	}
-	rows.Close()
+	_ = rows.Close()
 	return
 }
