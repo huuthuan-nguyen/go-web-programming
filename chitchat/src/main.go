@@ -35,9 +35,9 @@ func err(writer http.ResponseWriter, request *http.Request) {
 	}
 }
 
-func generateHTML(writer http.ResponseWriter, data interface{}, fn ...string) {
+func generateHTML(writer http.ResponseWriter, data interface{}, filenames ...string) {
 	var files []string
-	for _, file := range fn {
+	for _, file := range filenames {
 		files = append(files, fmt.Sprintf("templates/%s.html", file))
 	}
 
