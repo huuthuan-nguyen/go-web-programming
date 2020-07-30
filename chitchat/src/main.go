@@ -18,7 +18,7 @@ func index(writer http.ResponseWriter, request *http.Request) {
 			generateHTML(writer, threads, "layout", "private.navbar", "index")
 		}
 	} else {
-		error_message(writer, request, "Cannot get threads")
+		errorMessage(writer, request, "Cannot get threads")
 	}
 }
 
@@ -42,7 +42,7 @@ func generateHTML(writer http.ResponseWriter, data interface{}, fn ...string) {
 	}
 
 	templates := template.Must(template.ParseFiles(files...))
-	templates.ExecuteTemplate(writer, "layout", data)
+	_ = templates.ExecuteTemplate(writer, "layout", data)
 }
 
 func main() {
@@ -69,7 +69,7 @@ func main() {
 		Addr: "0.0.0.0:8080",
 		Handler: mux,
 	}
-	server.ListenAndServe()
+	_ = server.ListenAndServe()
 }
 
 type Server struct {

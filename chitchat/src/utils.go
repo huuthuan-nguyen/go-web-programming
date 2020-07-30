@@ -16,7 +16,7 @@ func session(w http.ResponseWriter, r *http.Request) (sess data.Session, err err
 	if err == nil {
 		sess = data.Session{Uuid: cookie.Value}
 		if ok, _ := sess.Check(); !ok {
-			err = errors.New("Invalid session")
+			err = errors.New("invalid session.")
 		}
 	}
 	return 
@@ -27,8 +27,8 @@ func danger(args ...interface{}) {
 	logger.Println(args...)
 }
 
-// convenince function to redirect to the error message page
-func error_message(writer http.ResponseWriter, request *http.Request, msg string) {
+// convenience function to redirect to the error message page
+func errorMessage(writer http.ResponseWriter, request *http.Request, msg string) {
 	url := []string{"/err?msg=", msg}
 	http.Redirect(writer, request, strings.Join(url, ""), 302)
 }
