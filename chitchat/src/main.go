@@ -5,8 +5,14 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"os"
+	"path/filepath"
 	"time"
+	"runtime"
 )
+
+var _, filename, _, _ = runtime.Caller(0)
+var rootPath = filepath.Dir(filename)
 
 func index(writer http.ResponseWriter, request *http.Request) {
 	threads, err := data.Threads()
@@ -37,8 +43,10 @@ func err(writer http.ResponseWriter, request *http.Request) {
 
 func generateHTML(writer http.ResponseWriter, data interface{}, filenames ...string) {
 	var files []string
+
 	for _, file := range filenames {
-		files = append(files, fmt.Sprintf("templates/%s.html", file))
+		templatePath := rootPath + string(os.PathSeparator) + "templates" + string(os.PathSeparator) + "%s.html"
+		files = append(files, fmt.Sprintf(templatePath, file))
 	}
 
 	templates := template.Must(template.ParseFiles(files...))
@@ -46,9 +54,10 @@ func generateHTML(writer http.ResponseWriter, data interface{}, filenames ...str
 }
 
 func main() {
+	// handle the static assets.
 	mux := http.NewServeMux() // this is like a controller in PHP
-	files := http.FileServer(http.Dir("/public")) // create handler function, like an action of controller.
-	
+	files := http.FileServer(http.Dir(rootPath + string(os.PathSeparator) + "public")) // create handler function, like an action of controller.
+
 	mux.Handle("/static/", http.StripPrefix("/static/", files)) // put the handler function to handle, like register an action to a route.
 
 	mux.HandleFunc("/", index) // default endpoint. callback as parameter.
@@ -68,6 +77,9 @@ func main() {
 	server := &http.Server{
 		Addr: "0.0.0.0:8080",
 		Handler: mux,
+		ReadTimeout: time.Duration(10 * int64(time.Second)),
+		WriteTimeout: time.Duration(600 * int64(time.Second)),
+		MaxHeaderBytes: 1 << 20,
 	}
 	_ = server.ListenAndServe()
 }
