@@ -79,7 +79,7 @@ type Server struct {
 	WriteTimeout time.Duration
 	MaxHeaderBytes int
 	// TLSConfig *tls.Config
-	// TLSNextProto map[string]func(*Server, *tls.Conn, Hanlder)
+	// TLSNextProto map[string]func(*Server, *tls.Conn, Handler)
 	// ConnState func(net.Conn, ConnState)
 	//ErrorLog *log.Logger
 }
