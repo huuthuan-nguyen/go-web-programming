@@ -11,8 +11,8 @@ import (
 var logger *log.Logger
 
 // check if the user is logged in and has a session, if not err is not nil
-func session(w http.ResponseWriter, r *http.Request) (sess data.Session, err error) {
-	cookie, err := r.Cookie("_cookie")
+func session(writer http.ResponseWriter, request *http.Request) (sess data.Session, err error) {
+	cookie, err := request.Cookie("_cookie")
 	if err == nil {
 		sess = data.Session{Uuid: cookie.Value}
 		if ok, _ := sess.Check(); !ok {
