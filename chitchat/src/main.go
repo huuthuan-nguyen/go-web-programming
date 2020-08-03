@@ -82,6 +82,7 @@ func main() {
 		MaxHeaderBytes: 1 << 20,
 	}
 	_ = server.ListenAndServe()
+	// _ = server.ListenAndServeTLS("cert.pem", "key.pem") // ssl/tls serve
 }
 
 type Server struct {

@@ -9,7 +9,7 @@ import (
 	"log"
 )
 
-var Db *sql.DB
+var Db *sql.DB // pool of database connection
 
 func init() {
 	var err error
