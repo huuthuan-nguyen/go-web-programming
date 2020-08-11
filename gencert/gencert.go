@@ -30,15 +30,17 @@ func main() {
 		ExtKeyUsage: []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth},
 		IPAddresses: []net.IP{net.ParseIP("127.0.0.1")},
 	}
-
+	// private key
 	pk, _ := rsa.GenerateKey(rand.Reader, 2048)
-
+	// DER format (you can use BER or DER) for encoding ASN.1 data structure and notation.
 	derBytes, _ := x509.CreateCertificate(rand.Reader, &template, &template, &pk.PublicKey, pk)
+	// create a cert.pem file
 	certOut, _ := os.Create("cert.pem")
-	pem.Encode(certOut, &pem.Block{Type: "CERTIFICATE", Bytes: derBytes})
-	certOut.Close()
+	pem.Encode(certOut, &pem.Block{Type: "CERTIFICATE", Bytes: derBytes}) // write the content
+	certOut.Close() // close the file
 
+	// create a key.pem file
 	keyOut, _ := os.Create("key.pem")
-	pem.Encode(keyOut, &pem.Block{Type: "RSA PRIVATE KEY", Bytes: x509.MarshalPKCS1PrivateKey(pk)})
-	keyOut.Close()
+	pem.Encode(keyOut, &pem.Block{Type: "RSA PRIVATE KEY", Bytes: x509.MarshalPKCS1PrivateKey(pk)}) // write the content to file.
+	keyOut.Close() // close the file
 }
