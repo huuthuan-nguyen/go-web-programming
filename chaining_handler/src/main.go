@@ -24,7 +24,7 @@ func main() {
 	}
 	hello := HelloHandler{}
 
-	http.Handle("/hello", log(hello))
+	http.Handle("/hello/", log(hello))
 
 	server.ListenAndServe()
 }
