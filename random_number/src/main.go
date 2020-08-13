@@ -47,6 +47,17 @@ func processContextAwareness(writer http.ResponseWriter, request *http.Request) 
 	t.Execute(writer, template.HTML(context))
 }
 
+func processNestingTemplate(writer http.ResponseWriter, request *http.Request) {
+	rand.Seed(time.Now().Unix())
+	var t *template.Template
+	if rand.Intn(10) > 5 {
+		t, _ = template.ParseFiles("layout.html", "red_hello.html")
+	} else {
+		t, _ = template.ParseFiles("layout.html")
+	}
+	t.ExecuteTemplate(writer, "layout", nil)
+}
+
 func main() {
 	server := http.Server{
 		Addr: "127.0.0.1:8080",
@@ -58,5 +69,6 @@ func main() {
 	http.HandleFunc("/include_action", processIncludeAction)
 	http.HandleFunc("/custom_function", processCustomFunction)
 	http.HandleFunc("/context_awareness", processContextAwareness)
+	http.HandleFunc("/nesting_template", processNestingTemplate)
 	server.ListenAndServe()
 }
