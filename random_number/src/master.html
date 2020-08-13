@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <title>Go Web Programming</title>
+    </head>
+    <body>
+        <div>This is master.html before</div>
+        {{ 12.3456 | printf "%.2f" }}
+        <div>This is the value of the dot in master.html - [{{ . }}]</div>
+        <hr />
+        {{ template "sub.html" . }}
+        <div>This is master.html after</div>
+    </body>
+</html>
