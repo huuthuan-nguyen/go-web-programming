@@ -6,17 +6,17 @@ import (
 	"fmt"
 	"html/template"
 	"image"
+	"image/color"
 	"image/draw"
 	"image/jpeg"
-	"net/http"
-	"os"
-	"strconv"
-	"time"
-	"image/color"
 	"io/ioutil"
 	"math"
+	"net/http"
+	"os"
 	"path/filepath"
+	"strconv"
 	"sync"
+	"time"
 )
 
 // find the average color of the picture
